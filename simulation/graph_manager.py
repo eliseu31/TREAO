@@ -48,7 +48,7 @@ class GraphManager:
         self.utility_values = {'ram': 0, 'cpu': 0, 'l_path': 0, 'n_traffic': 0, 's_mac': 0}
         self.longest_path = []
         # norm values
-        self.norm = {'ram': 0.01, 'cpu': 0.002, 'l_path': 0.1, 'n_traffic': 0.65, 's_mac': 0.1}
+        self.norm = {'ram': 0.01, 'cpu': 0.002, 'l_path': 0.1, 'n_traffic': 0.6, 's_mac': 0.15}
 
         # filter each color
         colors_list = ['green', 'blue', 'yellow', 'dimgray', 'red', 'darkviolet', 'orange']
