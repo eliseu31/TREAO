@@ -1,0 +1,17 @@
+{
+        "nodes": {
+                "0": {"function": "insertion_sort"},
+                "1": {"function": "quick_sort"},
+                "2": {"function": "heap_sort"},
+                "3": {"function": "heap_sort"},
+                "4": {"function": "heap_sort"},
+                "5": {"function": "heap_sort"}
+        },
+        "edges": [
+                [0, 1],
+                [1, 2],
+                [1, 3],
+                [2, 4],
+                [3, 4]
+        ]
+}

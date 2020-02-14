@@ -1,0 +1,25 @@
+{
+  "machines": {
+    "M1": {"machine_type": "ubuntu_pc"},
+    "M2": {"machine_type": "ubuntu_pc"},
+    "M3": {"machine_type": "rasp_pi"},
+    "M4": {"machine_type": "rasp_pi"},
+    "M5": {"machine_type": "rasp_pi"}
+  },
+  "specs": {
+    "ubuntu_pc": {"ram": 1000, "cpu": 1000, "time": 500},
+    "rasp_pi": {"ram": 200, "cpu": 200, "time": 100}
+  },
+  "network_delay": [
+    {"edge": ["M1", "M2"], "delay": 1},
+    {"edge": ["M1", "M3"], "delay": 1},
+    {"edge": ["M1", "M4"], "delay": 1},
+    {"edge": ["M1", "M5"], "delay": 1},
+    {"edge": ["M2", "M3"], "delay": 1},
+    {"edge": ["M2", "M4"], "delay": 1},
+    {"edge": ["M2", "M5"], "delay": 1},
+    {"edge": ["M3", "M4"], "delay": 1},
+    {"edge": ["M3", "M5"], "delay": 1},
+    {"edge": ["M4", "M5"], "delay": 1}
+  ]
+}

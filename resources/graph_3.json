@@ -1,0 +1,31 @@
+{
+        "nodes": {
+                "0": {"function": "insertion_sort"},
+                "1": {"function": "insertion_sort"},
+                "2": {"function": "insertion_sort"},
+                "3": {"function": "insertion_sort"},
+                "4": {"function": "insertion_sort"},
+                "5": {"function": "insertion_sort"},
+                "6": {"function": "insertion_sort"},
+                "7": {"function": "insertion_sort"},
+                "8": {"function": "insertion_sort"},
+                "9": {"function": "insertion_sort"},
+                "10": {"function": "insertion_sort"},
+                "11": {"function": "insertion_sort"},
+                "12": {"function": "insertion_sort"}
+        },
+        "edges": [
+                [0, 2],
+                [1, 3],
+                [2, 4],
+                [3, 5],
+                [4, 6],
+                [5, 7],
+                [6, 8],
+                [7, 9],
+                [8, 10],
+                [9, 11],
+                [10, 12],
+                [11, 12]
+        ]
+}
