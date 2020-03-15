@@ -4,13 +4,14 @@
     "selected_individuals": 20,
     "population": 50,
     "mutations": 20,
-    "period": 1
+    "period": 0.5
   },
   "policies": {
     "ram": 1,
     "cpu": 1,
     "l_path": 1,
     "n_traffic": 1,
-    "s_mac": 1
+    "s_mac": 1,
+    "clusters": 1
   }
 }

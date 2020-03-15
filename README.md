@@ -19,3 +19,5 @@ python simulation/main.py -s resources/sim_place.json
 # and producing the report in the defined json
 python simulation/main.py -g resources/graph.json -o resources/opt_param.json resources/opt_report.json
 ```
+
+

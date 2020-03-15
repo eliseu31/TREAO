@@ -45,10 +45,10 @@ class GraphManager:
         self.update_edges()
 
         # initializes all the results from cost functions
-        self.utility_values = {'ram': 0, 'cpu': 0, 'l_path': 0, 'n_traffic': 0, 's_mac': 0}
+        self.utility_values = {'ram': 0, 'cpu': 0, 'l_path': 0, 'n_traffic': 0, 's_mac': 0, 'clusters': 0}
         self.longest_path = []
         # norm values
-        self.norm = {'ram': 0.01, 'cpu': 0.002, 'l_path': 0.1, 'n_traffic': 0.6, 's_mac': 0.15}
+        self.norm = {'ram': 0.01, 'cpu': 0.002, 'l_path': 0.1, 'n_traffic': 0.6, 's_mac': 0.15, 'clusters': 0.15}
 
         # filter each color
         colors_list = ['green', 'blue', 'yellow', 'dimgray', 'red', 'darkviolet', 'orange']
@@ -57,7 +57,7 @@ class GraphManager:
         # figure to plot the simulation
         self.fig_simulation = None
         self.axes = dict()
-        self.points = {'ram': [], 'cpu': [], 'l_path': [], 'n_traffic': [], 's_mac': []}
+        self.points = {'ram': [], 'cpu': [], 'l_path': [], 'n_traffic': [], 's_mac': [], 'clusters': []}
 
     def simulate_graph(self):
         # predict the next pipeline
@@ -66,6 +66,7 @@ class GraphManager:
         self.search_longest_path()
         self.calc_avg_cost()
         self.calc_machines_cost()
+        self.calc_cluster_cost()
 
     def update_combination(self, machines_sequence):
         # iterate over the graph
@@ -84,7 +85,8 @@ class GraphManager:
                           'ram': self.utility_values['ram'] * self.norm['ram'],
                           'cpu': self.utility_values['cpu'] * self.norm['cpu'],
                           'n_traffic': self.utility_values['n_traffic'] * self.norm['n_traffic'],
-                          's_mac': self.utility_values['s_mac'] * self.norm['s_mac']}
+                          's_mac': self.utility_values['s_mac'] * self.norm['s_mac'],
+                          'clusters': self.utility_values['clusters'] * self.norm['clusters']}
         return utility_values
 
     def predict_pipeline(self):
@@ -140,6 +142,23 @@ class GraphManager:
         # return a list with the paths
         return list(point_combinations)
 
+    def find_clusters(self):
+        # group nodes according to the machines
+        group_nodes = itertools.groupby(sorted(self.graph.nodes(data='machine_id'), key=lambda x: x[1]),
+                                        key=lambda x: x[1])
+        # clusters output
+        n_clusters = dict(zip(self.available_machines.keys(), [0]*len(self.available_machines.keys())))
+        # for each machine check the number of clusters
+        for machine_id, group in group_nodes:
+            # gets the nodes list
+            nodes, _ = zip(*group)
+            # creates the sub-graph based in the machine nodes
+            subgraph = self.graph.subgraph(nodes)
+            # get the number of connected components
+            n_clusters[machine_id] = nx.number_connected_components(subgraph.to_undirected())
+        # returns the number of clusters
+        return n_clusters
+
     def search_longest_path(self):
         # resets the variable
         self.longest_path = []
@@ -172,6 +191,14 @@ class GraphManager:
         edges_cost = sum(edges_cost_values)
         # return the sum of both
         return nodes_cost + edges_cost
+
+    def calc_cluster_cost(self):
+        # gets the number of clusters
+        clusters = self.find_clusters()
+        # calculates the diff between 1 cluster per machine
+        self.utility_values['clusters'] = sum(map(lambda x: abs(x[1] - 1), clusters.items()))
+        # returns the cost value
+        return self.utility_values['clusters']
 
     def calc_avg_cost(self):
         # get all the values

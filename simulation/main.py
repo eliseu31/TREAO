@@ -115,4 +115,4 @@ if __name__ == '__main__':
         simulation_d['ga'] = ga.get_optimization_state()
         # save the json
         with open(results_path, 'w') as f:
-            json.dump(simulation_d, f)
+            json.dump(simulation_d, f, indent=2)
