@@ -6,26 +6,26 @@ import os
 
 if __name__ == '__main__':
     # array of files
-    graphs_data = [('P0(G0)', 'graph.json', 'machines_specs.json',
+    graphs_data = [('P0(G0)', 'graph_2.json', 'machines_specs.json',
                     ["M1", "M1", "M1", "M1", "M1", "M2", "M2", "M1"]),
                    ('P1(G1)', 'graph_3.json', 'machines_specs.json',
                     ["M1", "M2", "M1", "M2", "M1", "M2", "M1", "M2", "M1", "M2", "M1", "M2", "M2"]),
-                   ('P2(G2)', 'graph_2.json', 'machines_specs_1.json',
+                   ('P2(G2)', 'graph.json', 'machines_specs_1.json',
                     ["M1", "M1", "M1", "M1", "M1", "M2", "M5", "M2", "M3", "M2", "M4", "M2", "M2"]),
-                   ('P3(G2)', 'graph_2.json', 'machines_specs_1.json',
+                   ('P3(G2)', 'graph.json', 'machines_specs_1.json',
                     ["M2", "M2", "M2", "M1", "M1", "M1", "M1", "M1", "M4", "M5", "M1", "M3", "M2"])]
     table = [[], [], ["2/2", "2/2", "5/5", "6/5"]]
-    rows = ['vertices', 'network/edges', 'macs/clusters']
+    rows = ['vertices', 'edges', 'clusters']
     cost_data = dict()
     # configurations to validate
     root_path = os.path.dirname(sys.path[0])
-    functions_path = os.path.join(root_path, 'resources', 'function_req.json')
+    functions_path = os.path.join(root_path, 'resources', 'profiling', 'function_req.json')
 
     # for each file
     for name, file_name, machine_specs, placement in graphs_data:
         # graph path
-        graph_path = os.path.join(root_path, 'resources', file_name)
-        machines_path = os.path.join(root_path, 'resources', machine_specs)
+        graph_path = os.path.join(root_path, 'resources', 'graphs', file_name)
+        machines_path = os.path.join(root_path, 'resources', 'machine_specs', machine_specs)
         # creates the simulation graph
         simulation = GraphManager(graph_path, machines_path, functions_path)
         simulation.update_combination(placement)
@@ -44,15 +44,18 @@ if __name__ == '__main__':
     x = np.arange(len(cost_data)) + 0.6
     print(x)
     ram = [costs['ram'] for name, costs in cost_data.items()]
-    plt.bar(x - 0.2, ram, width=0.1, color='b', align='center', label='ram')
+    plt.bar(x - 0.25, ram, width=0.1, color='b', align='center', label='ram')
     cpu = [costs['cpu'] for name, costs in cost_data.items()]
-    plt.bar(x - 0.1, cpu, width=0.1, color='r', align='center', label='cpu')
+    plt.bar(x - 0.15, cpu, width=0.1, color='r', align='center', label='cpu')
     path = [costs['l_path'] for name, costs in cost_data.items()]
-    plt.bar(x, ram, width=0.1, color='g', align='center', label='path')
+    plt.bar(x - 0.05, ram, width=0.1, color='g', align='center', label='path')
     traffic = [costs['n_traffic'] for name, costs in cost_data.items()]
-    plt.bar(x + 0.1, traffic, width=0.1, color='yellow', align='center', label='traffic')
+    plt.bar(x + 0.05, traffic, width=0.1, color='yellow', align='center', label='traffic')
     diff = [costs['s_mac'] for name, costs in cost_data.items()]
-    plt.bar(x + 0.2, diff, width=0.1, color='brown', align='center', label='diff')
+    plt.bar(x + 0.15, diff, width=0.1, color='brown', align='center', label='diff')
+    clusters = [costs['clusters'] for name, costs in cost_data.items()]
+    plt.bar(x + 0.25, clusters, width=0.1, color='lightblue', align='center', label='cluster')
+
     plt.ylim([0, 0.4])
     plt.ylabel("Normalized Costs")
 

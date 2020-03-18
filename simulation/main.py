@@ -13,9 +13,9 @@ if __name__ == '__main__':
     # get the resources paths
     root_path = os.path.dirname(sys.path[0])
     # default relative paths
-    graph_rpath = os.path.join('resources', 'graph_3.json')
-    machines_rpath = os.path.join('resources', 'machines_specs.json')
-    functions_rpath = os.path.join('resources', 'function_req.json')
+    graph_rpath = os.path.join('resources', 'graphs', 'graph.json')
+    machines_rpath = os.path.join('resources', 'machine_specs', 'machines_specs.json')
+    functions_rpath = os.path.join('resources', 'profiling', 'function_req.json')
 
     parser = argparse.ArgumentParser()
     # parses the path arguments
