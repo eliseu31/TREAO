@@ -15,23 +15,29 @@ if __name__ == '__main__':
     # default relative paths
     graph_rpath = os.path.join('resources', 'graphs', 'graph.json')
     machines_rpath = os.path.join('resources', 'machine_specs', 'machines_specs.json')
-    functions_rpath = os.path.join('resources', 'profiling', 'function_req.json')
+    functions_rpath = os.path.join('resources', 'profiling', 'task_req.json')
 
     parser = argparse.ArgumentParser()
     # parses the path arguments
-    parser.add_argument('-g', metavar='graph', nargs=1, help="")
-    parser.add_argument('-f', metavar='functions_req', nargs=1, help="")
-    parser.add_argument('-m', metavar='machines_specs', nargs=1, help="")
-    parser.add_argument('-p', metavar='profile_data', nargs=1, help="")
+    parser.add_argument('-g', metavar='graph', nargs=1, help="graph description JSON path")
+    parser.add_argument('-t', metavar='task_req', nargs=1, help="task requirements JSON path")
+    parser.add_argument('-m', metavar='machines_specs', nargs=1, help="machine specifications JSON path")
+    parser.add_argument('-p', metavar='profile_data', nargs=1,
+                        help="dataset (CSV file) collected from the profiled tasks")
     # options to execute
-    parser.add_argument('-o', metavar=('optimization_parameters', 'output_report'), nargs=2, help="")
-    parser.add_argument('-s', metavar='simulated_placement', nargs=1, help="")
-    parser.add_argument('-d', metavar='machine_distributions', nargs=1, help="")
+    parser.add_argument('-o', metavar=('opt_param', 'report'), nargs=2,
+                        help="optimize the current setup, using the optimization parameters defined in a JSON file and "
+                             "storing the output report in another JSON file")
+    parser.add_argument('-s', metavar='placement', nargs=1,
+                        help="simulate the placement defined in the JSON file, the resulting output is stored "
+                             "in the same file")
+    parser.add_argument('-d', metavar='machine_type', nargs=1,
+                        help="plots the machine distributions for the given machine type")
     args = parser.parse_args()
 
     # checks the optional variables
     graph_rpath = args.g[0] if args.g else graph_rpath
-    functions_rpath = args.f[0] if args.f else functions_rpath
+    functions_rpath = args.t[0] if args.t else functions_rpath
     machines_rpath = args.m[0] if args.m else machines_rpath
     # configures the profiling path
     profiling_path = os.path.join(root_path, args.p[0]) if args.p else None

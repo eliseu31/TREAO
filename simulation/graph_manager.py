@@ -48,7 +48,7 @@ class GraphManager:
         self.utility_values = {'ram': 0, 'cpu': 0, 'l_path': 0, 'n_traffic': 0, 's_mac': 0, 'clusters': 0}
         self.longest_path = []
         # norm values
-        self.norm = {'ram': 0.01, 'cpu': 0.002, 'l_path': 0.1, 'n_traffic': 0.6, 's_mac': 0.15, 'clusters': 0.15}
+        self.norm = {'ram': 0.02, 'cpu': 0.004, 'l_path': 0.1, 'n_traffic': 0.45, 's_mac': 0.15, 'clusters': 0.2}
 
         # filter each color
         colors_list = ['green', 'blue', 'yellow', 'dimgray', 'red', 'darkviolet', 'orange']
@@ -207,8 +207,8 @@ class GraphManager:
         # get the network values
         net_values = [self.graph[source][target]['network_delay'] for source, target in self.graph.edges]
         # update the value
-        self.utility_values['ram'] = np.mean(ram_values)
-        self.utility_values['cpu'] = np.mean(cpu_values)
+        self.utility_values['ram'] = np.mean(ram_values) / len(self.available_machines)
+        self.utility_values['cpu'] = np.mean(cpu_values) / len(self.available_machines)
         self.utility_values['n_traffic'] = np.mean(net_values)
         # return the value
         return self.utility_values['ram'], self.utility_values['cpu'], self.utility_values['n_traffic']
