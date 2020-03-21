@@ -1,3 +1,5 @@
+from twisted.conch.insults.insults import privateModes
+
 from simulation.machine_data import MachinesManager
 from matplotlib.offsetbox import AnchoredText
 import matplotlib.pyplot as plt
@@ -163,6 +165,7 @@ class GraphManager:
         # resets the variable
         self.longest_path = []
         self.utility_values['l_path'] = 0
+        max_cost = 0
         # get the points to find the longest path
         points = self.find_parallel_paths()
         # iterate over each possible source and target
@@ -174,9 +177,11 @@ class GraphManager:
                 # get the path cost
                 path_cost = self.calc_longest_path(path)
                 # check if is the bigger
-                if path_cost > self.utility_values['l_path']:
+                if path_cost > max_cost:
                     # calculates the medium value
                     cost_avg = path_cost / len(path)
+                    # updates the maximum value
+                    max_cost = path_cost
                     # replace the maximum
                     self.longest_path = path
                     self.utility_values['l_path'] = cost_avg
