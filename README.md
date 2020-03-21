@@ -1,5 +1,7 @@
 # Resource/Task Simulation and Optimization using Genetic Algorithms
 
+![task-opt](docs/img/task-opt.gif)
+
 ## Installation & Usage
 
 The tool requires the previous installation of Python3 and their package installer, pip.
