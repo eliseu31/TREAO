@@ -72,9 +72,7 @@ python simulation/main.py -g resources/graphs/graph.json \
 
 ```bash
 # simulates different types of pipelines configurations
-python simulation/main.py -g resources/graphs/graph.json \
-                          -t resources/profiling/task_req.json \
-                          -m resources/machine_specs/machines_specs.json \
+python simulation/main.py -t resources/profiling/task_req.json \
                           -s resources/sim_place.json
 ```
 
