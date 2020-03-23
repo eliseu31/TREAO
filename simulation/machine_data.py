@@ -29,7 +29,7 @@ class MachinesManager:
                 fit_results[machine_type] = self.machines_data[machine_type].distributions
             # saves the file
             with open(backup_path, 'w') as backup_file:
-                json.dump(fit_results, backup_file)
+                json.dump(fit_results, backup_file, indent=2)
         else:
             # loads the distributions
             with open(backup_path, 'r') as backup_file:

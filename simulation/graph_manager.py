@@ -1,5 +1,3 @@
-from twisted.conch.insults.insults import privateModes
-
 from simulation.machine_data import MachinesManager
 from matplotlib.offsetbox import AnchoredText
 import matplotlib.pyplot as plt
