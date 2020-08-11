@@ -6,6 +6,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(sys.path[0])))
 
 from simulation.graph_manager import GraphManager
+from simulation.machine_data import MachinesManager
 from optimization.genetic_algorithm import GeneticAlgorithm
 
 
@@ -33,12 +34,15 @@ if __name__ == '__main__':
                              "in the same file")
     parser.add_argument('-d', metavar='machine_type', nargs=1,
                         help="plots the machine distributions for the given machine type")
+    parser.add_argument('-a', metavar='add curve', nargs=1,
+                        help="plots an additional curve on the machine distributions")
     args = parser.parse_args()
 
     # checks the optional variables
     graph_rpath = args.g[0] if args.g else graph_rpath
     functions_rpath = args.t[0] if args.t else functions_rpath
     machines_rpath = args.m[0] if args.m else machines_rpath
+    add_curve = args.a[0] if args.a else None
     # configures the profiling path
     profiling_path = os.path.join(root_path, args.p[0]) if args.p else None
 
@@ -46,6 +50,9 @@ if __name__ == '__main__':
     graph_path = os.path.join(root_path, graph_rpath)
     machines_path = os.path.join(root_path, machines_rpath)
     functions_path = os.path.join(root_path, functions_rpath)
+
+    # creates the machines manager
+    machines_manager = MachinesManager(functions_path, profiling_path, additional_curve_path=add_curve)
 
     # only simulates the data
     if args.s:
@@ -60,7 +67,7 @@ if __name__ == '__main__':
             specs_path = os.path.join(root_path, place['specs'])
             graph_path = os.path.join(root_path, place['graph'])
             # creates the simulator
-            simulation = GraphManager(graph_path, specs_path, functions_path, profiling_path)
+            simulation = GraphManager(graph_path, specs_path, machines_manager)
             simulation.update_combination(place['placement'])
             simulation.simulate_graph()
             utility_values = simulation.get_simulation_state()['costs']
@@ -73,12 +80,12 @@ if __name__ == '__main__':
         sys.exit()
 
     # creates the simulation graph
-    simulation = GraphManager(graph_path, machines_path, functions_path, profiling_path)
+    simulation = GraphManager(graph_path, machines_path, machines_manager)
 
     # checks if visualizes the profiled data
     if args.d:
         # plots the machine distribution
-        simulation.mm.machines_data[args.d[0]].plot_histogram()
+        simulation.machines_manager.machines_data[args.d[0]].plot_histogram()
         # exits the program
         sys.exit()
 

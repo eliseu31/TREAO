@@ -8,12 +8,12 @@ import psutil
 
 sys.path.append(os.path.join(os.path.dirname(sys.path[0])))
 
-from profiler.sorting_algorithms import bubble_sort
-from profiler.sorting_algorithms import selection_sort
-from profiler.sorting_algorithms import insertion_sort
-from profiler.sorting_algorithms import merge_sort
-from profiler.sorting_algorithms import quick_sort
-from profiler.sorting_algorithms import heap_sort
+from resources.methods.bubble_sort import bubble_sort
+from resources.methods.selection_sort import selection_sort
+from resources.methods.insertion_sort import insertion_sort
+from resources.methods.merge_sort import merge_sort
+from resources.methods.quick_sort import quick_sort
+from resources.methods.heap_sort import heap_sort
 
 
 def process_algorithm(method, record_size, measures_list):

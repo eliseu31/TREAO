@@ -11,7 +11,31 @@
       "M1"
     ],
     "graph": "resources/graphs/graph.json",
-    "specs": "resources/machine_specs/machines_specs.json"
+    "specs": "resources/machine_specs/machines_specs.json",
+    "ram": [
+      9.842933503803264,
+      0.19685867007606528
+    ],
+    "cpu": [
+      31.035249181545204,
+      0.12414099672618081
+    ],
+    "l_path": [
+      2.707321494369847,
+      0.2707321494369847
+    ],
+    "n_traffic": [
+      0.5,
+      0.225
+    ],
+    "s_mac": [
+      0.22014877639030817,
+      0.033022316458546225
+    ],
+    "clusters": [
+      4,
+      0.8
+    ]
   },
   {
     "placement": [
@@ -30,6 +54,30 @@
       "M1"
     ],
     "graph": "resources/graphs/graph_3.json",
-    "specs": "resources/machine_specs/machines_specs.json"
+    "specs": "resources/machine_specs/machines_specs.json",
+    "ram": [
+      9.834410265741965,
+      0.19668820531483933
+    ],
+    "cpu": [
+      49.442919237673664,
+      0.19777167695069467
+    ],
+    "l_path": [
+      1.9677714475417805,
+      0.19677714475417807
+    ],
+    "n_traffic": [
+      0.25,
+      0.1125
+    ],
+    "s_mac": [
+      0.12028224536825949,
+      0.018042336805238923
+    ],
+    "clusters": [
+      2,
+      0.4
+    ]
   }
 ]

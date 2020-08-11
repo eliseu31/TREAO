@@ -1,4 +1,3 @@
-from simulation.machine_data import MachinesManager
 from matplotlib.offsetbox import AnchoredText
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -13,9 +12,11 @@ warnings.filterwarnings("ignore")
 
 class GraphManager:
 
-    def __init__(self, graph_path, machines_path, backup_path, df_path=None):
+    def __init__(self, graph_path, machines_path, machines_manager):
+        # sets the seed to obtain the solutions
+        np.random.seed(16)
         # starts the machine manager
-        self.mm = MachinesManager(backup_path, df_path)
+        self.machines_manager = machines_manager
 
         # read the machines data
         with open(machines_path, 'r') as machines_file:
@@ -97,7 +98,7 @@ class GraphManager:
             # map the machine id to a type
             machine_type = self.available_machines[machine_id]['machine_type']
             # get the predictions from the machine
-            predictions_tuple = self.mm.machines_data[machine_type].predict_resources(f_name)
+            predictions_tuple = self.machines_manager.machines_data[machine_type].predict_resources(f_name)
             node_data['time'], node_data['ram'], node_data['cpu'] = predictions_tuple
         # update the network data
         self.update_edges()

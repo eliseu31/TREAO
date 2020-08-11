@@ -4,6 +4,8 @@ import random
 class GeneticAlgorithm:
 
     def __init__(self, simulation, policies):
+        # set the random seed
+        random.seed(16)
         # save the simulation and the policies
         self.simulation = simulation
         self.policies = policies

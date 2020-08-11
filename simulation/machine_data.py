@@ -7,7 +7,7 @@ import json
 
 class MachinesManager:
 
-    def __init__(self, backup_path, df_path=None):
+    def __init__(self, backup_path, df_path=None, additional_curve_path=None):
         # parse the data set according to the machines
         self.machines_data = {}
 
@@ -19,14 +19,23 @@ class MachinesManager:
             df = pd.read_csv(df_path)
             # unique list of machines
             machines_types = df['machine_type'].unique()
+            # if there are additional curve data
+            add_dist = {m_type: None for m_type in machines_types}
+            if additional_curve_path:
+                # loads the distributions
+                with open(additional_curve_path, 'r') as file:
+                    file_srt = file.read()
+                    add_dist = json.loads(file_srt)
             # iterate over the machine ids
             for machine_type in machines_types:
                 # creates the machine obj
-                self.machines_data[machine_type] = MachineData(machine_type, df=df)
+                self.machines_data[machine_type] = MachineData(machine_type, df=df,
+                                                               add_dist=add_dist[machine_type])
                 # fits to each machine
                 self.machines_data[machine_type].fit()
                 # stores the results
                 fit_results[machine_type] = self.machines_data[machine_type].distributions
+
             # saves the file
             with open(backup_path, 'w') as backup_file:
                 json.dump(fit_results, backup_file, indent=2)
@@ -43,16 +52,15 @@ class MachinesManager:
 
 class MachineData:
 
-    def __init__(self, machine_type, df=None, distributions=None):
+    def __init__(self, machine_type, df=None, distributions=None, add_dist=None):
         # names of the algorithms
         self.algorithm_names = ['bubble_sort', 'heap_sort', 'insertion_sort',
                                 'merge_sort', 'quick_sort', 'selection_sort']
         # fit the distributions
         self.distributions = distributions if distributions else dict()
-        # saves the actual df
         self.df = df
-        # stores the type
         self.my_type = machine_type
+        self.add_dist = add_dist
 
     def fit(self):
         # select each machine data
@@ -125,6 +133,12 @@ class MachineData:
                                    loc=self.distributions[f_name][metric][0],
                                    scale=self.distributions[f_name][metric][1])
         ax.plot(bins, norm_dist, label='gaussian')
+        # plot the additional normal distribution
+        if self.add_dist:
+            norm_dist = stats.norm.pdf(bins,
+                                       loc=self.add_dist[f_name][metric][0],
+                                       scale=self.add_dist[f_name][metric][1])
+            ax.plot(bins, norm_dist, label='prediction')
         # use multimodal distribution
         kde = stats.gaussian_kde(values, bw_method=0.5)
         ax.plot(bins, kde.pdf(bins), label='multimodal')
