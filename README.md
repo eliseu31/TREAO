@@ -76,4 +76,20 @@ python simulation/main.py -t resources/profiling/task_req.json \
                           -s resources/sim_place.json
 ```
 
+## Citations
 
+Please use the following citation, or the BibTex entry (if you are using LaTex) for citation purposes:
+
+- E. Pereira, J. Reis, R. J. F. Rossetti and G. Gonçalves, "A Zero-Shot Learning Approach for Task Allocation Optimization in Cyber-Physical Systems," in IEEE Transactions on Industrial Cyber-Physical Systems, vol. 2, pp. 90-97, 2024, doi: 10.1109/TICPS.2024.3392151.
+
+```
+@ARTICLE{treao_article,
+  author={Pereira, Eliseu and Reis, João and Rossetti, Rosaldo J. F. and Gonçalves, Gil},
+  journal={IEEE Transactions on Industrial Cyber-Physical Systems}, 
+  title={A Zero-Shot Learning Approach for Task Allocation Optimization in Cyber-Physical Systems}, 
+  year={2024},
+  volume={2},
+  pages={90-97},
+  doi={10.1109/TICPS.2024.3392151}
+}
+```
